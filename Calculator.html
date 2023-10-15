@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content='width=device-width, initial-scale=1.0'>
+    <title>Calculator</title>
+    <h2 id="title">Pink-themed Calculator</h2>
+</head>
+<body>
+    <div id="panel">
+        <div id="display"><div id="display-text">0</div></div>
+        <button id="clear">AC</button>
+        <button id="add">+</button>
+        <div class="custom-line-break"></div>
+
+        <button id="one">1</button>
+        <button id="two">2</button>
+        <button id="three">3</button>
+        <button id="subtract">-</button>
+        <div class="custom-line-break"></div>
+
+        <button id="four">4</button>
+        <button id="five">5</button>
+        <button id="six">6</button>
+        <button id="multiply">*</button>
+        <div class="custom-line-break"></div>
+
+        <button id="seven">7</button>
+        <button id="eight">8</button>
+        <button id="nine">9</button>
+        <button id="divide">/</button>
+        <div class="custom-line-break"></div>
+
+        <button id="zero">0</button>
+        <button id="decimal">.</button>
+        <button id="equals" >=</button>
+    </div>
+
+    <style type="text/css">
+            html {
+                background-color: #fce6f8;
+            }
+
+            #title {
+                margin: 0 auto;
+                font-family: system-ui;
+                text-align: center;
+                margin-top: 50px;
+            }
+
+            #panel {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-family: system-ui;
+                font-size: 25px;
+                background-color: #f0c7fc;
+                width: 335px;
+                height: 505px;
+                border-radius: 10px;
+                text-align: center;
+
+            }
+
+            #display {
+                margin: 0 auto;
+                margin-top: 26px;
+                margin-bottom: 10px;
+                width: 292px;
+                height: 45px;
+                border-radius: 10px;
+                border: 1px solid;
+                background-color: #ffc2da;
+                text-align: left;
+                text-indent: 10px;
+                padding-top: 13px;
+            }
+
+            button {
+                width: 70px;
+                height: 70px;
+                background-color: #ffc2da;
+                border-radius: 10px;
+                border: 1px solid;
+                font-size: 22px;
+                font-family: system-ui;
+            }
+
+            .custom-line-break {
+                content: "";
+                display: block;
+                height: 8px;
+            }
+
+            #clear {
+                width: 220px;
+                background-color: #ff99c2;
+            }
+
+            #zero {
+                width: 146px;
+            }
+
+            #equals {
+                background-color: #ff99c2;
+            }
+
+        </style>
+
+
+    <script type="text/javascript">
+
+        let currentContent = '0'; 
+
+        document.getElementById('clear').addEventListener('click', () => {
+            currentContent = '0';
+            updateDisplay();
+        })
+
+        document.getElementById('one').addEventListener('click', () => {
+            appendToDisplay('1');
+        })
+
+        document.getElementById('two').addEventListener('click', () => {
+            appendToDisplay('2');
+        })
+
+        document.getElementById('three').addEventListener('click', () => {
+                appendToDisplay('3');
+            })
+
+            document.getElementById('four').addEventListener('click', () => {
+                appendToDisplay('4');
+            })
+
+            document.getElementById('five').addEventListener('click', () => {
+                appendToDisplay('5');
+            })
+
+            document.getElementById('six').addEventListener('click', () => {
+                appendToDisplay('6');
+            })
+
+            document.getElementById('seven').addEventListener('click', () => {
+                appendToDisplay('7')
+            })
+
+            document.getElementById('eight').addEventListener('click', () => {
+                appendToDisplay('8');
+            })
+
+            document.getElementById('nine').addEventListener('click', () => {
+                appendToDisplay('9');
+            })
+
+            document.getElementById('add').addEventListener('click', () => {
+                appendToDisplay('+');
+            })
+
+            document.getElementById('subtract').addEventListener('click', () => {
+                appendToDisplay('-');
+            })
+
+            document.getElementById('multiply').addEventListener('click', () => {
+                appendToDisplay('*');
+            })
+
+            document.getElementById('divide').addEventListener('click', () => {
+                appendToDisplay('/')
+            })
+
+        document.getElementById('equals').addEventListener('click', () => {
+            try {
+                currentContent = eval(currentContent);
+                currentContent = parseFloat(currentContent.toFixed(8)); 
+                updateDisplay();
+            } catch (error) {
+                currentContent = 'Error';
+                updateDisplay();
+            }
+        });
+
+
+        document.getElementById('decimal').addEventListener('click', () => {
+            appendDecimalToDisplay();
+        });
+
+        function appendDecimalToDisplay() {
+            if (currentContent === '0' || currentContent === 'Error') {
+                currentContent = '0.';
+            } else if (currentContent.indexOf('.') === -1) {
+                currentContent += '.';
+            }
+            updateDisplay();
+        }
+
+
+        function appendToDisplay(text) {
+            if (currentContent === '0' || currentContent === 'Error') {
+                currentContent = text;
+            } else {
+                if (text === '+' || text === '*' || text === '/') {
+                    if (currentContent[currentContent.length - 1] !== '-') {
+                        currentContent += text;
+                    }
+                } else {
+                    currentContent += text;
+                }
+            }
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            const displayPanel = document.getElementById('display-text');
+            displayPanel.innerText = currentContent;
+        }
+
+        updateDisplay();
+    </script>
+</body>
+</html>
